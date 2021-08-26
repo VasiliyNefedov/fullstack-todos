@@ -1,8 +1,11 @@
 const express = require('express')
 const config = require('config')    //  отдельный config файл
 const mongoose = require('mongoose')
+const auth = require('./routes/auth.routes')    //  роут аутентификации
 
 const app = express()
+
+app.use('/api/auth', auth)
 
 const PORT = config.get('port') || 5000
 const uri = config.get('mongoUri')
