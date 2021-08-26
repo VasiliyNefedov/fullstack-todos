@@ -1,12 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div v-if="(isAuthenticated)">
+      <div id="nav">
+        <router-link to="/">Home</router-link>
+        |
+        <router-link to="/about">about</router-link>
+      </div>
+      <router-view/>
     </div>
-    <router-view/>
+    <div v-else>
+      <Authpage />
+    </div>
   </div>
+
 </template>
+
+<script>
+import Authpage from "./components/Authpage";
+export default {
+  components: {Authpage},
+  data() {
+    return {
+      isAuthenticated: true
+    }
+  }
+}
+
+</script>
 
 <style>
 #app {
