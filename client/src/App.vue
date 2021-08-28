@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="(isAuthenticated)">
+    <div v-if="(this.$store.state.isAuthenticated)">
       <div id="nav">
         <router-link to="/">Home</router-link>
         |
@@ -17,12 +17,17 @@
 
 <script>
 import Authpage from "./components/Authpage";
+
+
 export default {
   components: {Authpage},
   data() {
     return {
-      isAuthenticated: true
+
     }
+  },
+  beforeMount() {
+    // this.$store.dispatch('getAuth')
   }
 }
 

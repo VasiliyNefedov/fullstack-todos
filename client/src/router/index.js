@@ -19,8 +19,6 @@ const routes = [
       {
         path: '*',
         redirect: '/',
-        // name: 'Auth',
-        // component: Auth
       }
     ]
 
