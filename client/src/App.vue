@@ -4,7 +4,9 @@
       <div id="nav">
         <router-link to="/">Home</router-link>
         |
-        <router-link to="/about">about</router-link>
+        <router-link to="/about">About</router-link>
+        |
+        <span class="logout-btn" @click="logout">Logout</span>
       </div>
       <router-view/>
     </div>
@@ -26,8 +28,13 @@ export default {
 
     }
   },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+    }
+  },
   beforeMount() {
-    // this.$store.dispatch('getAuth')
+     this.$store.dispatch('checkAuth')
   }
 }
 
@@ -46,9 +53,13 @@ export default {
   padding: 30px;
 }
 
-#nav a {
+#nav a, span {
   font-weight: bold;
   color: #2c3e50;
+}
+.logout-btn {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 #nav a.router-link-exact-active {

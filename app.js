@@ -6,12 +6,6 @@ const cors = require('cors')
 
 const app = express()
 
-// const corsOptions = {
-//     credentials: true,
-//     origin: 'http://localhost:5000',  // сменил на http://<имя моего домена>
-//     allowedHeaders: ['Content-Type'],
-//     optionsSuccessStatus: 200
-// };
 
 app.use(cors())
 app.use(express.json({extended: true}))

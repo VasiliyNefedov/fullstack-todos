@@ -13,6 +13,10 @@
           <div>
             <button>{{ signInBlock ? 'Войти' : 'Зарегистрироваться' }}</button>
           </div>
+          <div>
+            <p>тестовый email: <strong>test@test.com</strong></p>
+            <p>пароль: <strong>testpass</strong></p>
+          </div>
         </form>
       </div>
     </div>
