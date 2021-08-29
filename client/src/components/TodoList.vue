@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-for="item in todoList" :key="item.id">
-      <p>{{ item.title }}</p>
-      <p>{{ item.body }}</p>
+      <p><strong>{{ item.title }}</strong></p>
+      <p>{{ item.description }}</p>
     </div>
   </div>
 </template>
@@ -15,6 +15,9 @@ export default {
     todoList() {
       return this.$store.state.todos
     }
+  },
+  mounted() {
+    this.$store.dispatch('getTodos')
   }
 }
 </script>

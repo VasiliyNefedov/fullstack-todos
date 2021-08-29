@@ -22,8 +22,8 @@ export default new Vuex.Store({
             state.isAuthenticated = false
             state.token = null
         },
-        pushNewTodo(state, newTodo) {
-            state.todos.push(newTodo)
+        setTodos(state, todos) {
+            state.todos = todos
         }
     },
     actions: {
@@ -63,8 +63,17 @@ export default new Vuex.Store({
             await axios.post('http://localhost:5000/api/todos/create', newTodo, {headers})
                 .then(response => {
                     console.log('then', response.data)
-                    // this.login(id, token)
-                    ctx.commit('pushNewTodo', newTodo)
+                    ctx.dispatch('getTodos')
+                })
+                .catch(error => console.log('catch', error.response))
+        },
+        async getTodos(ctx) {
+            const headers = {Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`}
+            await axios.get('http://localhost:5000/api/todos/', {headers})
+                .then(response => {
+                    console.log('response', response.data)
+                    const todos = response.data
+                    ctx.commit('setTodos', todos)
                 })
                 .catch(error => console.log('catch', error.response))
         }

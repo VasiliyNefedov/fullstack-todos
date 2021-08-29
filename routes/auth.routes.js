@@ -78,7 +78,6 @@ router.post('/login',
                 {expiresIn: '1h'}
             )
             res.json({token, userId: user.id})
-
         } catch (e) {
             res.status(500).json({message: 'Ошибка, попробуйте еще раз'})
         }

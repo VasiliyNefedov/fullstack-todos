@@ -12,7 +12,6 @@ router.post('/create', authMdw, async (req, res) => {
         if (!title) return res.status(500).json({message: 'Ошибка, нет заголовка'})
         if (!description) return res.status(500).json({message: 'Ошибка, нет описания'})
         const todo = new Todo({title: title, description: description, owner: owner, isDone: false})
-        console.log(todo)
         await todo.save()
         res.status(201).json({message: 'Задача создана'})
     } catch(e) {
