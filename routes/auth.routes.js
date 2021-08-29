@@ -42,7 +42,6 @@ router.post(
         res.status(201).json({message: 'Пользователь создан'})
 
     } catch (e) {
-// не забыть развернуть ошибки!
         res.status(500).json({message: 'Ошибка, попробуйте еще раз'})
     }
 })
@@ -81,7 +80,6 @@ router.post('/login',
             res.json({token, userId: user.id})
 
         } catch (e) {
-// не забыть развернуть ошибки!
             res.status(500).json({message: 'Ошибка, попробуйте еще раз'})
         }
 })

@@ -2,6 +2,7 @@ const express = require('express')
 const config = require('config')    //  отдельный config файл
 const mongoose = require('mongoose')
 const auth = require('./routes/auth.routes')    //  роут аутентификации
+const todos = require('./routes/todos.routes')    //  роут аутентификации
 const cors = require('cors')
 
 const app = express()
@@ -10,6 +11,7 @@ const app = express()
 app.use(cors())
 app.use(express.json({extended: true}))
 app.use('/api/auth', auth)
+app.use('/api/todos', todos)
 
 const PORT = config.get('port') || 5000
 const uri = config.get('mongoUri')
