@@ -82,6 +82,15 @@ export default new Vuex.Store({
                     ctx.dispatch('getTodos')
                 })
                 .catch(error => console.log('catch', error.response))
+        },
+        async setTodoStatus(ctx, {todoId, todoIsDone}) {
+            const headers = {Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`}
+            await axios.put('http://localhost:5000/api/todos/update', {todoId, todoIsDone},{headers})
+                .then(response => {
+                    console.log('response', response.data)
+                    ctx.dispatch('getTodos')
+                })
+                .catch(error => console.log('catch', error.response))
         }
     },
     getters: {

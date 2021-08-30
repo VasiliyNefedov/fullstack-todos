@@ -44,4 +44,20 @@ router.delete('/delete/:id', authMdw, async(req, res) => {
     }
 })
 
+//  обновление статуса задачи
+router.put('/update', authMdw, async(req, res) => {
+    try{
+        const todoId = req.body.todoId
+        const todo = await Todo.findById(todoId)
+        if (!todo) return res.status(500).json({message: 'Ошибка, задача не найдена в базе'})
+        if (todo.isDone === req.body.todoIsDone) {
+            const status = !todo.isDone
+            await Todo.findByIdAndUpdate({_id: todoId}, {isDone: status})
+                .then(res.status(200).json({message: 'Статус задачи обновлен'}))
+        }
+    } catch (e) {
+        res.status(500).json({message: 'Ошибка, попробуйте еще раз'})
+    }
+})
+
 module.exports = router

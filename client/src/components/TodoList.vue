@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-for="item in todoList" :key="item._id" class="todo">
+    <div v-for="item in todoList" :key="item._id" class="todo" :class="{'todo__done': item.isDone}">
       <div class="todo__head">
-        <div><label>Выполнено</label><input type="checkbox"></div>
+        <div><label>Выполнено</label><input type="checkbox" :checked="item.isDone" @click="setDoneMark(item._id, item.isDone) "></div>
         <div class="todo__title"><p><strong>{{ item.title }}</strong></p></div>
         <div>
           <button class="del-btn" @click="deleteTodo(item._id)">Удалить</button>
@@ -20,6 +20,9 @@ export default {
   methods: {
     deleteTodo(todoId) {
       this.$store.dispatch('deleteTodo', todoId)
+    },
+    setDoneMark(todoId, todoIsDone) {
+        this.$store.dispatch('setTodoStatus', {todoId, todoIsDone})
     }
   },
   computed: {
@@ -40,6 +43,9 @@ export default {
   max-width: 800px;
   border: lightcoral 3px solid;
   border-radius: 10px;
+}
+.todo__done {
+  border: #42b983 3px solid;
 }
 .todo__head {
   display: flex;
