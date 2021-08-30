@@ -7,18 +7,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         isAuthenticated: false,
-        currentUserId: null,
         token: null,
         todos: [],
     },
     mutations: {
-        setAuth(state, {id, token}) {
-            state.currentUserId = id
+        setAuth(state, {token}) {
             state.isAuthenticated = true
             state.token = token
         },
         clearUser(state) {
-            state.currentUserId = null
             state.isAuthenticated = false
             state.token = null
         },
