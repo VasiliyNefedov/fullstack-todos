@@ -25,7 +25,7 @@ export default new Vuex.Store({
     },
     actions: {
         async signUp(ctx, user) {
-            await axios.post('http://localhost:5000/api/auth/register', user)
+            axios.post('http://localhost:5000/api/auth/register', user)
                 .then(response => {
                     console.log('then', response.data)
                     ctx.commit('setAuth', user)
@@ -33,7 +33,7 @@ export default new Vuex.Store({
                 .catch(error => console.log('catch', error.response))
         },
         async signIn(ctx, user) {
-            await axios.post('http://localhost:5000/api/auth/login', user)
+            axios.post('http://localhost:5000/api/auth/login', user)
                 .then(response => {
                     console.log('then', response.data)
                     const id = response.data.userId
@@ -57,7 +57,7 @@ export default new Vuex.Store({
         },
         async addNewTodo(ctx, newTodo) {
             const headers = {Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`}
-            await axios.post('http://localhost:5000/api/todos/create', newTodo, {headers})
+            axios.post('http://localhost:5000/api/todos/create', newTodo, {headers})
                 .then(response => {
                     console.log('then', response.data)
                     ctx.dispatch('getTodos')
@@ -66,7 +66,7 @@ export default new Vuex.Store({
         },
         async getTodos(ctx) {
             const headers = {Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`}
-            await axios.get('http://localhost:5000/api/todos/', {headers})
+            axios.get('http://localhost:5000/api/todos/', {headers})
                 .then(response => {
                     console.log('response', response.data)
                     const todos = response.data
@@ -76,7 +76,7 @@ export default new Vuex.Store({
         },
         async deleteTodo(ctx, todoId) {
             const headers = {Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`}
-            await axios.delete(`http://localhost:5000/api/todos/delete/${todoId}`, {headers})
+            axios.delete(`http://localhost:5000/api/todos/delete/${todoId}`, {headers})
                 .then(response => {
                     console.log('response', response.data)
                     ctx.dispatch('getTodos')
@@ -85,7 +85,7 @@ export default new Vuex.Store({
         },
         async setTodoStatus(ctx, {todoId, todoIsDone}) {
             const headers = {Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`}
-            await axios.put('http://localhost:5000/api/todos/update', {todoId, todoIsDone},{headers})
+            axios.put('http://localhost:5000/api/todos/update', {todoId, todoIsDone},{headers})
                 .then(response => {
                     console.log('response', response.data)
                     ctx.dispatch('getTodos')
