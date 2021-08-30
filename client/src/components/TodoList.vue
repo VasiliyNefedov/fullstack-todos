@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-for="item in todoList" :key="item.id" class="todo">
+    <div v-for="item in todoList" :key="item._id" class="todo">
       <div class="todo__head">
         <div><label>Выполнено</label><input type="checkbox"></div>
         <div class="todo__title"><p><strong>{{ item.title }}</strong></p></div>
         <div>
-          <button class="del-btn">Удалить</button>
+          <button class="del-btn" @click="deleteTodo(item._id)">Удалить</button>
         </div>
       </div>
       <p>{{ item.description }}</p>
@@ -17,6 +17,11 @@
 
 export default {
   name: "TodoList",
+  methods: {
+    deleteTodo(todoId) {
+      this.$store.dispatch('deleteTodo', todoId)
+    }
+  },
   computed: {
     todoList() {
       return this.$store.state.todos

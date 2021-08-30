@@ -76,6 +76,15 @@ export default new Vuex.Store({
                     ctx.commit('setTodos', todos)
                 })
                 .catch(error => console.log('catch', error.response))
+        },
+        async deleteTodo(ctx, todoId) {
+            const headers = {Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`}
+            await axios.delete(`http://localhost:5000/api/todos/delete/${todoId}`, {headers})
+                .then(response => {
+                    console.log('response', response.data)
+                    ctx.dispatch('getTodos')
+                })
+                .catch(error => console.log('catch', error.response))
         }
     },
     getters: {
