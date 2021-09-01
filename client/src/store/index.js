@@ -8,7 +8,7 @@ const rootURL = 'http://localhost:5000/api'
 const storageName = 'userData'
 
 const authorizationHeader = function () {
-    return {Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`}
+    return {Authorization: `Bearer ${JSON.parse(localStorage.getItem(storageName)).token}`}
 }
 
 export default new Vuex.Store({
