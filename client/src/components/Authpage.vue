@@ -46,19 +46,25 @@ export default {
       repeatPass: "",
       isVisiblePassword: false,
       passwordFieldType: 'password',
-      passwordErrorMessages: [],
+      passwordErrorMessages: '',
       repPassErrorMessages: '',
     }
   },
   methods: {
-    signIn() {
-      this.signInBlock = true
-    },
-    signUp() {
-      this.signInBlock = false
+    clearData() {
       this.email = ''
       this.password = ''
       this.repeatPass = ''
+      this.passwordErrorMessages = ''
+      this.repPassErrorMessages = ''
+    },
+    signIn() {
+      this.signInBlock = true
+      this.clearData()
+    },
+    signUp() {
+      this.signInBlock = false
+      this.clearData()
     },
     handleSubmit() {
       const user = {email: this.email, password: this.password}
@@ -82,6 +88,13 @@ export default {
         this.passwordFieldType = 'text'
       }
     },
+    validatePassLength() {
+      if (this.password.length <= 6) {
+        this.passwordErrorMessages = 'Длина пароля должна быть больше 6 символов'
+      } else {
+        this.passwordErrorMessages = ''
+      }
+    },
     validateRepPassword() {
       if ((this.password !== this.repeatPass) && this.repeatPass) {
         this.repPassErrorMessages = 'Ваши пароли не совпадают'
@@ -95,6 +108,7 @@ export default {
       this.validateRepPassword()
     },
     password() {
+      this.validatePassLength()
       this.validateRepPassword()
     },
   },
