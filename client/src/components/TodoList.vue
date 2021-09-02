@@ -5,7 +5,7 @@
         <div><label>Выполнено</label><input type="checkbox" :checked="item.isDone" @click="setDoneMark(item._id, item.isDone) "></div>
         <div class="todo__title"><p><strong>{{ item.title }}</strong></p></div>
         <div>
-          <button class="del-btn" @click="deleteTodo(item._id)">Удалить</button>
+          <v-btn class="del-btn" @click="deleteTodo(item._id)" icon color="accent"><v-icon>mdi-delete-circle</v-icon></v-btn>
         </div>
       </div>
       <p>{{ item.description }}</p>

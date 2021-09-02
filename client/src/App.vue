@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-    <div v-if="(this.$store.state.isAuthenticated)">
-      <div id="nav">
-        <router-link to="/">Home</router-link>
-        |
-        <router-link to="/about">About</router-link>
-        |
-        <span class="logout-btn" @click="logout">Logout</span>
+    <v-app>
+      <div v-if="(this.$store.state.isAuthenticated)">
+        <div id="nav">
+          <router-link to="/">Home</router-link>
+          |
+          <router-link to="/about">About</router-link>
+          |
+          <span class="logout-btn" @click="logout">Logout</span>
+        </div>
+        <router-view/>
       </div>
-      <router-view/>
-    </div>
-    <div v-else>
-      <Authpage />
-    </div>
+      <div v-else>
+        <Authpage/>
+      </div>
+      <v-icon>mdi-rocket-launch</v-icon>
+    </v-app>
   </div>
 
 </template>

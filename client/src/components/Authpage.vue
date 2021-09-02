@@ -1,18 +1,25 @@
 <template>
   <div>
     <h2>authpage</h2>
-    <span @click="signIn" class="nav" :class="{active: signInBlock}">Войти</span> | <span @click="signUp" class="nav" :class="{active: !signInBlock}">Зарегистрироваться</span>
+    <span :class="{active: signInBlock}" class="nav" @click="signIn">Войти</span> | <span
+      :class="{active: !signInBlock}" class="nav"
+      @click="signUp">Зарегистрироваться</span>
     <div>{{ signInBlock ? 'Sign In' : 'Sign Up' }}
       <div style="display: block">
-        <form @submit.prevent="handleSubmit" novalidate>
-          <div><label>Email:</label>
-            <input type="email" required v-model="email" placeholder="example@mail.com" tabindex="1"></div>
-          <div><label>Password:</label>
-            <input type="password" required v-model="password" placeholder="do not use 123 or equal"
-                   class="password" tabindex="2"></div>
-          <div>
-            <button>{{ signInBlock ? 'Войти' : 'Зарегистрироваться' }}</button>
-          </div>
+        <form novalidate @submit.prevent="handleSubmit">
+          <v-text-field v-model="email" class="input" label="Email" placeholder="example@mail.com"
+                        tabindex="1" type="email"></v-text-field>
+          <v-text-field v-model="password" class="input" label="Password" placeholder="do not use 123 or equal"
+                        tabindex="2" type="password"></v-text-field>
+          <transition name="fade22">
+            <v-text-field v-show="!signInBlock" v-model="repeatPass" class="input" label="Repeat password"
+                          placeholder="repeat your password"
+                          tabindex="2" type="password"></v-text-field>
+          </transition>
+          <v-btn elevation="4" min-width="300"
+                 rounded @click="handleSubmit"
+          >{{ signInBlock ? 'Войти' : 'Зарегистрироваться' }}
+          </v-btn>
           <div>
             <p>тестовый email: <strong>test@test.com</strong></p>
             <p>пароль: <strong>testpass</strong></p>
@@ -31,6 +38,7 @@ export default {
       signInBlock: true,
       email: "test@test.com",
       password: "testpass",
+      repeatPass: ""
     }
   },
   methods: {
@@ -67,5 +75,23 @@ export default {
 
 form {
   /*display: block;*/
+}
+
+.input {
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+input {
+  border: 1px solid #2c3e50;
+}
+.fade22-enter-active {
+  transition: opacity .5s;
+}
+.fade22-leave-active {
+  transition: opacity .2s;
+}
+.fade22-enter, .fade22-leave-to {
+  opacity: 0;
 }
 </style>
