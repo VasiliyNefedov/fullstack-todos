@@ -4,7 +4,7 @@ import axios from "axios";
 
 Vue.use(Vuex)
 
-const rootURL = 'http://localhost:5000/api'
+const apiURL = 'http://localhost:5000/api'
 const storageName = 'userData'
 
 const authorizationHeader = function () {
@@ -32,15 +32,15 @@ export default new Vuex.Store({
     },
     actions: {
         async signUp(ctx, user) {
-            axios.post(`${rootURL}/auth/register`, user)
+            axios.post(`${apiURL}/auth/register`, user)
                 .then(response => {
                     console.log('then', response.data)
-                    ctx.commit('setAuth', user)
+                    ctx.dispatch('signIn', user)
                 })
                 .catch(error => console.log('catch', error.response))
         },
         async signIn(ctx, user) {
-            axios.post(`${rootURL}/auth/login`, user)
+            axios.post(`${apiURL}/auth/login`, user)
                 .then(response => {
                     console.log('then', response.data)
                     const id = response.data.userId
@@ -48,7 +48,6 @@ export default new Vuex.Store({
                     localStorage.setItem(storageName, JSON.stringify({
                         userId: id, token
                     }))
-                    // this.login(id, token)
                     ctx.commit('setAuth', {id, token})
                 })
                 .catch(error => console.log('catch', error.response))
@@ -63,7 +62,7 @@ export default new Vuex.Store({
         },
         async addNewTodo(ctx, newTodo) {
             const headers = authorizationHeader()
-            axios.post(`${rootURL}/todos/create`, newTodo, {headers})
+            axios.post(`${apiURL}/todos/create`, newTodo, {headers})
                 .then(response => {
                     console.log('then', response.data)
                     ctx.dispatch('getTodos')
@@ -72,7 +71,7 @@ export default new Vuex.Store({
         },
         async getTodos(ctx) {
             const headers = authorizationHeader()
-            axios.get(`${rootURL}/todos/`, {headers})
+            axios.get(`${apiURL}/todos/`, {headers})
                 .then(response => {
                     console.log('response', response.data)
                     const todos = response.data
@@ -82,7 +81,7 @@ export default new Vuex.Store({
         },
         async deleteTodo(ctx, todoId) {
             const headers = authorizationHeader()
-            axios.delete(`${rootURL}/todos/delete/${todoId}`, {headers})
+            axios.delete(`${apiURL}/todos/delete/${todoId}`, {headers})
                 .then(response => {
                     console.log('response', response.data)
                     ctx.dispatch('getTodos')
@@ -91,7 +90,7 @@ export default new Vuex.Store({
         },
         async setTodoStatus(ctx, {todoId, todoIsDone}) {
             const headers = authorizationHeader()
-            axios.put(`${rootURL}/todos/update`, {todoId, todoIsDone}, {headers})
+            axios.put(`${apiURL}/todos/update`, {todoId, todoIsDone}, {headers})
                 .then(response => {
                     console.log('response', response.data)
                     ctx.dispatch('getTodos')
