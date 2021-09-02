@@ -9,7 +9,8 @@
           <v-text-field v-model="email" label="Email" placeholder="example@mail.com"
                         tabindex="1" type="email"></v-text-field>
           <v-text-field v-model="password" label="Password" placeholder="do not use 123 or equal"
-                        tabindex="2" :type="passwordFieldType">
+                        tabindex="2" :type="passwordFieldType"
+                        :error-messages="passwordErrorMessages">
             <template v-slot:append>
               <v-icon @click="showPassword">{{ isVisiblePassword ? 'mdi-eye' : 'mdi-eye-outline' }}</v-icon>
             </template>
@@ -17,7 +18,8 @@
           <transition name="fade22">
             <v-text-field v-show="!signInBlock" v-model="repeatPass" label="Repeat password"
                           placeholder="repeat your password"
-                          tabindex="3" :type="passwordFieldType"></v-text-field>
+                          tabindex="3" :type="passwordFieldType"
+                          :error-messages="repPassErrorMessages"></v-text-field>
           </transition>
         </div>
         <v-btn elevation="4" min-width="230"
@@ -43,7 +45,9 @@ export default {
       password: "",
       repeatPass: "",
       isVisiblePassword: false,
-      passwordFieldType: 'password'
+      passwordFieldType: 'password',
+      passwordErrorMessages: [],
+      repPassErrorMessages: '',
     }
   },
   methods: {
@@ -54,6 +58,7 @@ export default {
       this.signInBlock = false
       this.email = ''
       this.password = ''
+      this.repeatPass = ''
     },
     handleSubmit() {
       const user = {email: this.email, password: this.password}
@@ -76,8 +81,23 @@ export default {
         this.isVisiblePassword = true
         this.passwordFieldType = 'text'
       }
+    },
+    validateRepPassword() {
+      if ((this.password !== this.repeatPass) && this.repeatPass) {
+        this.repPassErrorMessages = 'Ваши пароли не совпадают'
+      } else {
+        this.repPassErrorMessages = ''
+      }
     }
-  }
+  },
+  watch: {
+    repeatPass() {
+      this.validateRepPassword()
+    },
+    password() {
+      this.validateRepPassword()
+    },
+  },
 }
 </script>
 
